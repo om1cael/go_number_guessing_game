@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 	"strings"
+	"time"
 )
 
 var difficultyLevels map[string]int = map[string]int{
@@ -44,6 +46,8 @@ func playGame() {
 	attempts := 1
 	randomNumber := rand.Intn(101)
 
+	start := time.Now()
+
 	for {
 		fmt.Print("Enter your guess: ")
 		fmt.Scan(&guess)
@@ -56,6 +60,10 @@ func playGame() {
 			fmt.Printf("Incorrect! The number is less than %v\n", guess)
 		} else {
 			fmt.Printf("Congratulations! You guessed the number in %v attempts\n", attempts)
+
+			end := time.Now()
+			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 1, 64))
+
 			break
 		}
 
