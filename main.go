@@ -62,7 +62,7 @@ func playGame() {
 			fmt.Printf("Congratulations! You guessed the number in %v attempts\n", attempts)
 
 			end := time.Now()
-			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 1, 64))
+			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 2, 64))
 
 			break
 		}
