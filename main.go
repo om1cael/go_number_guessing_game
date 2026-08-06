@@ -73,11 +73,9 @@ func getDifficultyLevelInput() (int, error) {
 
 	fmt.Println("Please select the difficulty level:")
 
-	i := 1
-	for difficulty, chances := range difficultyLevels {
-		fmt.Printf("%v. %v (%v chances)\n", i, difficulty, chances)
-		i++
-	}
+	fmt.Printf("1. Easy (%v chances)\n", difficultyLevels["Easy"])
+	fmt.Printf("2. Medium (%v chances)\n", difficultyLevels["Medium"])
+	fmt.Printf("3. Hard (%v chances)\n", difficultyLevels["Hard"])
 
 	fmt.Print("\nEnter your choice: ")
 	fmt.Scan(&choice)
