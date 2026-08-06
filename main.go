@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strings"
 )
 
 var difficultyLevels map[string]int = map[string]int{
@@ -18,15 +19,17 @@ func main() {
 	fmt.Println("You have 5 chances to guess the correct number.")
 	fmt.Println("")
 
-	fmt.Println("Please select the difficulty level:")
+	for {
+		playGame()
 
-	i := 1
-	for difficulty, chances := range difficultyLevels {
-		fmt.Printf("%v. %v (%v chances)\n", i, difficulty, chances)
-		i++
+		playAgain := "y"
+		fmt.Print("Do you want to play again? [Y/n]: ")
+		fmt.Scanln(&playAgain)
+
+		if strings.ToLower(playAgain) != "y" {
+			break
+		}
 	}
-
-	playGame()
 }
 
 func playGame() {
@@ -67,6 +70,14 @@ func playGame() {
 
 func getDifficultyLevelInput() (int, error) {
 	var choice int
+
+	fmt.Println("Please select the difficulty level:")
+
+	i := 1
+	for difficulty, chances := range difficultyLevels {
+		fmt.Printf("%v. %v (%v chances)\n", i, difficulty, chances)
+		i++
+	}
 
 	fmt.Print("\nEnter your choice: ")
 	fmt.Scan(&choice)
