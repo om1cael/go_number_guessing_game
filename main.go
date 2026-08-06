@@ -9,11 +9,17 @@ import (
 	"time"
 )
 
+type match struct {
+	hintProvided bool
+}
+
 var difficultyLevels map[string]int = map[string]int{
 	"Easy":   10,
 	"Medium": 5,
 	"Hard":   3,
 }
+
+var gameMatch match
 
 func main() {
 	fmt.Println("Welcome to the Number Guessing Game!")
@@ -41,6 +47,8 @@ func playGame() {
 		return
 	}
 
+	gameMatch = match{hintProvided: false}
+
 	var guess int
 	currentChances := chances
 	attempts := 1
@@ -65,6 +73,14 @@ func playGame() {
 			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 2, 64))
 
 			break
+		}
+
+		if currentChances == (chances - 1) {
+			if randomNumber >= 10 {
+				fmt.Printf("Hint: the number starts with %v\n", randomNumber/10)
+			} else {
+				fmt.Printf("Hint: the number is very small!\n")
+			}
 		}
 
 		currentChances--
