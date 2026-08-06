@@ -44,7 +44,7 @@ func playGame() {
 	var guess int
 	currentChances := chances
 	attempts := 1
-	randomNumber := rand.Intn(101)
+	randomNumber := rand.Intn(100) + 1
 
 	start := time.Now()
 
