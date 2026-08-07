@@ -9,17 +9,11 @@ import (
 	"time"
 )
 
-type match struct {
-	hintProvided bool
-}
-
 var difficultyLevels map[string]int = map[string]int{
 	"Easy":   10,
 	"Medium": 5,
 	"Hard":   3,
 }
-
-var gameMatch match
 
 func main() {
 	fmt.Println("Welcome to the Number Guessing Game!")
@@ -46,8 +40,6 @@ func playGame() {
 		fmt.Println(err)
 		return
 	}
-
-	gameMatch = match{hintProvided: false}
 
 	var guess int
 	currentChances := chances
