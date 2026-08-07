@@ -9,11 +9,29 @@ import (
 	"time"
 )
 
+type Difficulty int
+
+const (
+	Easy   Difficulty = 1
+	Medium Difficulty = 2
+	Hard   Difficulty = 3
+)
+
+type match struct {
+	difficulty Difficulty
+}
+
 var difficultyLevels map[string]int = map[string]int{
 	"Easy":   10,
 	"Medium": 5,
 	"Hard":   3,
 }
+
+var gameMatch match
+
+var easyHighScore = 0
+var mediumHighScore = 0
+var hardHighScore = 0
 
 func main() {
 	fmt.Println("Welcome to the Number Guessing Game!")
@@ -64,6 +82,24 @@ func playGame() {
 			end := time.Now()
 			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 2, 64))
 
+			switch gameMatch.difficulty {
+			case Easy:
+				if easyHighScore == 0 || attempts < easyHighScore {
+					easyHighScore = attempts
+					fmt.Printf("Your new high score in the easy difficulty is %v attempts!\n", easyHighScore)
+				}
+			case Medium:
+				if mediumHighScore == 0 || attempts < mediumHighScore {
+					mediumHighScore = attempts
+					fmt.Printf("Your new high score in the medium difficulty is %v attempts!\n", mediumHighScore)
+				}
+			case Hard:
+				if hardHighScore == 0 || attempts < hardHighScore {
+					hardHighScore = attempts
+					fmt.Printf("Your new high score in the hard difficulty is %v attempts!\n", hardHighScore)
+				}
+			}
+
 			break
 		}
 
@@ -95,6 +131,10 @@ func getDifficultyLevelInput() (int, error) {
 
 	fmt.Print("\nEnter your choice: ")
 	fmt.Scan(&choice)
+
+	gameMatch = match{
+		difficulty: Difficulty(choice),
+	}
 
 	switch choice {
 	case 1:
