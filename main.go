@@ -17,10 +17,6 @@ const (
 	Hard   Difficulty = 3
 )
 
-type match struct {
-	difficulty Difficulty
-}
-
 var difficultyLevels = map[Difficulty]int{
 	Easy:   10,
 	Medium: 5,
