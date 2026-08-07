@@ -64,7 +64,10 @@ func playGame() {
 
 	for {
 		fmt.Print("Enter your guess: ")
-		fmt.Scan(&guess)
+		if _, err := fmt.Scan(&guess); err != nil {
+			fmt.Println("Invalid guess")
+			continue
+		}
 
 		attempts++
 
