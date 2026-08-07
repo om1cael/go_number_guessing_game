@@ -27,11 +27,7 @@ var difficultyLevels = map[Difficulty]int{
 	Hard:   3,
 }
 
-var gameMatch match
-
-var easyHighScore = 0
-var mediumHighScore = 0
-var hardHighScore = 0
+var highScores = map[Difficulty]int{}
 
 func main() {
 	fmt.Println("Welcome to the Number Guessing Game!")
@@ -53,7 +49,7 @@ func main() {
 }
 
 func playGame() {
-	chances, err := getDifficultyLevelInput()
+	difficulty, chances, err := getDifficultyLevelInput()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -82,21 +78,16 @@ func playGame() {
 			end := time.Now()
 			fmt.Printf("You took %v seconds to complete the game!\n", strconv.FormatFloat(end.Sub(start).Abs().Seconds(), 'f', 2, 64))
 
-			switch gameMatch.difficulty {
-			case Easy:
-				if easyHighScore == 0 || attempts < easyHighScore {
-					easyHighScore = attempts
-					fmt.Printf("Your new high score in the easy difficulty is %v attempts!\n", easyHighScore)
-				}
-			case Medium:
-				if mediumHighScore == 0 || attempts < mediumHighScore {
-					mediumHighScore = attempts
-					fmt.Printf("Your new high score in the medium difficulty is %v attempts!\n", mediumHighScore)
-				}
-			case Hard:
-				if hardHighScore == 0 || attempts < hardHighScore {
-					hardHighScore = attempts
-					fmt.Printf("Your new high score in the hard difficulty is %v attempts!\n", hardHighScore)
+			if highScores[difficulty] == 0 || attempts < highScores[difficulty] {
+				highScores[difficulty] = attempts
+
+				switch difficulty {
+				case Easy:
+					fmt.Printf("Your new high score on the easy difficulty is %v!\n", highScores[difficulty])
+				case Medium:
+					fmt.Printf("Your new high score on the medium difficulty is %v!\n", highScores[difficulty])
+				case Hard:
+					fmt.Printf("Your new high score on the hard difficulty is %v!\n", highScores[difficulty])
 				}
 			}
 
@@ -120,7 +111,7 @@ func playGame() {
 	}
 }
 
-func getDifficultyLevelInput() (int, error) {
+func getDifficultyLevelInput() (Difficulty, int, error) {
 	var choice int
 
 	fmt.Println("Please select the difficulty level:")
@@ -132,18 +123,14 @@ func getDifficultyLevelInput() (int, error) {
 	fmt.Print("\nEnter your choice: ")
 	fmt.Scan(&choice)
 
-	gameMatch = match{
-		difficulty: Difficulty(choice),
-	}
-
 	switch choice {
 	case 1:
-		return difficultyLevels[Easy], nil
+		return Easy, difficultyLevels[Easy], nil
 	case 2:
-		return difficultyLevels[Medium], nil
+		return Medium, difficultyLevels[Medium], nil
 	case 3:
-		return difficultyLevels[Hard], nil
+		return Hard, difficultyLevels[Hard], nil
 	default:
-		return 0, errors.New("Invalid choice.")
+		return 0, 0, errors.New("Invalid choice.")
 	}
 }
