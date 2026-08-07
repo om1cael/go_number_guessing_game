@@ -21,10 +21,10 @@ type match struct {
 	difficulty Difficulty
 }
 
-var difficultyLevels map[string]int = map[string]int{
-	"Easy":   10,
-	"Medium": 5,
-	"Hard":   3,
+var difficultyLevels = map[Difficulty]int{
+	Easy:   10,
+	Medium: 5,
+	Hard:   3,
 }
 
 var gameMatch match
@@ -125,9 +125,9 @@ func getDifficultyLevelInput() (int, error) {
 
 	fmt.Println("Please select the difficulty level:")
 
-	fmt.Printf("1. Easy (%v chances)\n", difficultyLevels["Easy"])
-	fmt.Printf("2. Medium (%v chances)\n", difficultyLevels["Medium"])
-	fmt.Printf("3. Hard (%v chances)\n", difficultyLevels["Hard"])
+	fmt.Printf("1. Easy (%v chances)\n", difficultyLevels[Easy])
+	fmt.Printf("2. Medium (%v chances)\n", difficultyLevels[Medium])
+	fmt.Printf("3. Hard (%v chances)\n", difficultyLevels[Hard])
 
 	fmt.Print("\nEnter your choice: ")
 	fmt.Scan(&choice)
@@ -138,11 +138,11 @@ func getDifficultyLevelInput() (int, error) {
 
 	switch choice {
 	case 1:
-		return difficultyLevels["Easy"], nil
+		return difficultyLevels[Easy], nil
 	case 2:
-		return difficultyLevels["Medium"], nil
+		return difficultyLevels[Medium], nil
 	case 3:
-		return difficultyLevels["Hard"], nil
+		return difficultyLevels[Hard], nil
 	default:
 		return 0, errors.New("Invalid choice.")
 	}
