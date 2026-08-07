@@ -12,9 +12,9 @@ import (
 type Difficulty int
 
 const (
-	Easy   Difficulty = 1
-	Medium Difficulty = 2
-	Hard   Difficulty = 3
+	Easy Difficulty = iota + 1
+	Medium
+	Hard
 )
 
 var difficultyLevels = map[Difficulty]int{
